@@ -1,0 +1,11 @@
+google-adk
+google-cloud-bigquery
+sqlalchemy
+sqlalchemy-bigquery
+fastapi
+uvicorn
+streamlit
+pydantic
+python-dotenv
+google-genai
+pytest
