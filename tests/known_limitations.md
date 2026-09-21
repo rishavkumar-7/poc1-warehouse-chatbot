@@ -17,11 +17,18 @@ Update this list as the build proceeds; it's part of the exit-criteria deliverab
 - **No concurrency/session handling.** The FastAPI layer in this POC does not
   handle multiple simultaneous users/sessions robustly — fine for a demo, not
   for production load.
-- **ADK API surface not yet verified against the installed version.** The exact
-  method used to invoke the agent (`agent.run(...)` in `api/routes.py`) and the
-  `Agent(...)` constructor kwargs in `agent/agent_definition.py` need to be
-  checked against whichever `google-adk` version actually gets installed —
-  these have changed across ADK releases.
+- **No reverse/search lookups by design.** All 6 use cases take a known ID
+  (shipment_id, user_id) and return details about it — none search across
+  records by an attribute like carrier (e.g. "which shipments are FedEx?").
+  This is a deliberate scope decision to stay within the brief's 6 approved
+  use cases, not an oversight. The assistant correctly declines these rather
+  than guessing, which is itself a working demonstration of the "never answer
+  from your own knowledge" rule.
+- **ADK API surface — confirmed, not guessed.** `Agent(...)` requires a `name`
+  kwarg; invocation is via `InMemoryRunner.run(user_id=, session_id=,
+  new_message=types.Content(...))` after an async
+  `session_service.create_session(...)` call, not a simple `agent.run(text)`.
+  All confirmed working end-to-end against real Vertex AI as of this session.
 - **BigQuery vs SQLite datetime handling differs.** Tests run against SQLite via
   `DATABASE_URL` override with naive UTC datetimes; the real BigQuery path uses
   `TIMESTAMP` columns and should be re-verified once real credentials are
