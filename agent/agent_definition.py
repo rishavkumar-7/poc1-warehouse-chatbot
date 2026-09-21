@@ -38,7 +38,18 @@ def build_agent():
     from google.adk import Agent  # deferred import: only required once ADK is installed
 
     return Agent(
+        name="warehouse_operations_assistant",
         model=settings.GEMINI_MODEL_NAME,
         instruction=SYSTEM_INSTRUCTION,
         tools=ALL_TOOLS,
     )
+
+APP_NAME = "warehouse_ops_assistant"
+
+
+def build_runner():
+    from google.adk.runners import InMemoryRunner
+
+    agent = build_agent()
+    runner = InMemoryRunner(agent=agent, app_name=APP_NAME)
+    return runner, APP_NAME
