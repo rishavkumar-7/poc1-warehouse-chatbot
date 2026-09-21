@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from db.connector import run_query
 from config import settings
 
@@ -15,7 +15,7 @@ def get_recent_throughput(shipment_id: str, window_minutes: int = None) -> float
             in the window (caller must handle this — see estimation/pd_estimate.py).
     """
     window_minutes = window_minutes or settings.THROUGHPUT_WINDOW_MINUTES
-    cutoff = datetime.utcnow() - timedelta(minutes=window_minutes)
+    cutoff = datetime.now(timezone.utc) - timedelta(minutes=window_minutes)
 
     sql = """
         SELECT COUNT(*) as cnt FROM tasks

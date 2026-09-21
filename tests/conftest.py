@@ -9,7 +9,7 @@ import os
 
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import pytest
 from sqlalchemy import MetaData, Table, Column, String, Boolean, DateTime, create_engine
 
@@ -55,7 +55,7 @@ def seeded_engine():
 
     metadata.create_all(engine)
 
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     with engine.begin() as conn:
         conn.execute(users.insert(), [
