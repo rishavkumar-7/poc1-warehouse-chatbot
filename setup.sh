@@ -35,7 +35,10 @@ export project="$GCP_PROJECT_ID"
 export dataset="$BQ_DATASET"
 envsubst < db/schema.sql | bq query --use_legacy_sql=false
 
-echo "== 6. Loading seed data =="
+echo "== 6. Resetting and loading seed data (safe to re-run) =="
+for t in users shipments orders tasks totes; do
+    bq query --use_legacy_sql=false "TRUNCATE TABLE \`${GCP_PROJECT_ID}.${BQ_DATASET}.${t}\`" 2>/dev/null || true
+done
 envsubst < db/seed_data.sql | bq query --use_legacy_sql=false
 
 echo "== 7. Verifying data landed =="
@@ -64,5 +67,6 @@ python3 -c "from google.adk import Agent; print('google.adk import OK')"
 echo ""
 echo "Setup complete. Next steps:"
 echo "  Terminal tab 1: uvicorn api.main:app --host 0.0.0.0 --port 8000"
-echo "  Terminal tab 2: streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0"
+echo "  Terminal tab 2: cd poc1-warehouse-chatbot"
+echo "  Terminal tab 2: python3 -m streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0 --server.enableCORS false --server.enableXsrfProtection false --server.headless true"
 echo "  Then open Web Preview on port 8501."
