@@ -3,6 +3,9 @@ Single source of truth for anything environment-specific.
 All other modules read config from here — never read os.environ directly elsewhere.
 """
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID", "")
 
