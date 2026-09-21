@@ -64,9 +64,32 @@ fi
 echo "== 10. Verifying the ADK import =="
 python3 -c "from google.adk import Agent; print('google.adk import OK')"
 
+echo "== 11. Scaffolding adk_app/ for the adk web dev console (skips if it already exists) =="
+if [ -f "adk_app/agent.py" ]; then
+    echo "adk_app/ already exists — skipping."
+else
+    mkdir -p adk_app
+    touch adk_app/__init__.py
+    cat > adk_app/agent.py << 'AGENTEOF'
+from agent.agent_definition import build_agent
+ 
+root_agent = build_agent()
+AGENTEOF
+    echo "adk_app/ created."
+fi
+ 
 echo ""
-echo "Setup complete. Next steps:"
-echo "  Terminal tab 1: uvicorn api.main:app --host 0.0.0.0 --port 8000"
-echo "  Terminal tab 2: cd poc1-warehouse-chatbot"
-echo "  Terminal tab 2: python3 -m streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0 --server.enableCORS false --server.enableXsrfProtection false --server.headless true"
-echo "  Then open Web Preview on port 8501."
+echo "Setup complete. Open three terminal tabs:"
+echo ""
+echo "  Tab 1 (API):"
+echo "    uvicorn api.main:app --host 0.0.0.0 --port 8000"
+echo ""
+echo "  Tab 2 (client-facing UI):"
+echo "    cd poc1-warehouse-chatbot"
+echo "    python3 -m streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0 --server.enableCORS false --server.enableXsrfProtection false --server.headless true"
+echo ""
+echo "  Tab 3 (dev console — shows raw tool-call events):"
+echo "    cd poc1-warehouse-chatbot"
+echo "    adk web adk_app --port 8080 --allow_origins=\"*\""
+echo ""
+echo "Then open Web Preview on ports 8501 and 8080 (8000 only needed if testing the API directly via /docs)."
