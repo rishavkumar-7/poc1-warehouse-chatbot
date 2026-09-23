@@ -9,3 +9,5 @@ pydantic
 python-dotenv
 google-genai
 pytest
+streamlit-autorefresh
+plotly
