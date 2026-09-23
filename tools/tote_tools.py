@@ -16,8 +16,8 @@ def get_tote_requirements(shipment_id: str) -> dict:
     rows = run_query(sql, {"shipment_id": shipment_id})
     counts = {r["status"]: r["cnt"] for r in rows}
 
-    required = sum(counts.values())
+    total_needed = sum(counts.values())
     completed = counts.get("completed", 0)
-    answer = {"required": required, "completed": completed, "remaining": required - completed}
+    answer = {"total_needed": total_needed, "completed": completed, "remaining": total_needed - completed}
 
     return wrap(answer, "query", "totes", sql + f" | shipment_id={shipment_id}")

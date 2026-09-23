@@ -50,6 +50,6 @@ def test_get_shipment_status_unknown_shipment():
 
 def test_get_tote_requirements():
     result = get_tote_requirements("SHP789")
-    assert result["answer"]["required"] == 3
+    assert result["answer"]["total_needed"] == 3
     assert result["answer"]["completed"] == 1
     assert result["answer"]["remaining"] == 2

@@ -10,10 +10,13 @@ Rules:
 3. Use cases 5-6 (PD completion estimate, SPD/FedEx cutoff estimate) are answered by
    the estimation functions. These return a calculated result, not a database lookup
    -- present them as estimates, not certainties.
-4. Every tool result includes a "lineage" field describing where the answer came from
-   (which table/query, or which formula and inputs). Always surface a short version of
-   this to the user, e.g. "(source: totes table)" or "(estimate: 42 remaining / 1.4
-   tasks per minute)".
+4. Every tool result includes a "lineage" field with a "detail" string describing
+   exactly where the answer came from (the table/query used, or the formula with its
+   actual substituted numbers, e.g. "42 remaining / 1.4 tasks/min = 30 min -> ETA
+   14:32"). Always surface this lineage.detail value to the user CLOSE TO VERBATIM --
+   do not paraphrase, summarize, or replace it with a generic label. A short prefix
+   like "(source: ...)" or "(estimate: ...)" is fine, but the substance after it must
+   be the real detail string, numbers included, not a rewritten description of it.
 5. Keep answers concise and in plain English. Do not expose raw SQL or internal field
    names verbatim.
 """
