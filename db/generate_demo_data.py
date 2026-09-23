@@ -1,5 +1,5 @@
 """
-Regenerates db/seed_data.sql itself — same file, same format, same load
+Regenerates db/seed_data.sql itself - same file, same format, same load
 command you already use (`envsubst < db/seed_data.sql | bq query ...`).
 No new files, no new commands.
 
@@ -62,8 +62,8 @@ def main():
 
     lines = []
     lines.append("-- Mock data exercising all 6 in-scope use cases.")
-    lines.append("-- The first block below is the ORIGINAL known dataset — SHP789, SHP800, U123,")
-    lines.append("-- U124 — kept exactly as-is because tests/manual_test_questions.md references")
+    lines.append("-- The first block below is the ORIGINAL known dataset - SHP789, SHP800, U123,")
+    lines.append("-- U124 - kept exactly as-is because tests/manual_test_questions.md references")
     lines.append("-- these specific IDs. Everything after that is bulk synthetic data for demo scale.")
     lines.append("-- Regenerate with: python3 db/generate_demo_data.py [--seed N]")
     lines.append("")
@@ -184,7 +184,7 @@ def main():
         lines.append(",\n".join(chunk) + ";")
         lines.append("")
 
-    OUT_FILE.write_text("\n".join(lines))
+    OUT_FILE.write_text("\n".join(lines), encoding="utf-8")
 
     print(f"Wrote {OUT_FILE}")
     print(f"Users: {2 + len(users)}, Shipments: {2 + len(shipments)}, "
