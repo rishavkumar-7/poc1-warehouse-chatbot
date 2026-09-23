@@ -220,7 +220,7 @@ with dash_col:
                 fig.update_layout(height=220, margin=dict(l=10, r=10, t=10, b=10),
                                    xaxis_title=None, yaxis_title=None,
                                    paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+                st.plotly_chart(fig, width='stretch', config={"displayModeBar": False})
             else:
                 st.bar_chart(op)
             st.markdown("</div>", unsafe_allow_html=True)
@@ -238,7 +238,7 @@ with dash_col:
                 ))
                 fig.update_layout(height=220, margin=dict(l=10, r=10, t=10, b=10),
                                    paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+                st.plotly_chart(fig, width='stretch', config={"displayModeBar": False})
             else:
                 st.bar_chart(pz)
             st.markdown("</div>", unsafe_allow_html=True)
@@ -257,7 +257,7 @@ with dash_col:
                 fig.update_layout(height=220, margin=dict(l=10, r=10, t=10, b=10),
                                    showlegend=False,
                                    paper_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+                st.plotly_chart(fig, width='stretch', config={"displayModeBar": False})
             else:
                 st.bar_chart(ts)
             st.markdown("</div>", unsafe_allow_html=True)
@@ -279,7 +279,7 @@ with dash_col:
                 fig.update_layout(height=200, margin=dict(l=20, r=20, t=30, b=10),
                                    paper_bgcolor="rgba(0,0,0,0)",
                                    font={"color": "#ddd"})
-                st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+                st.plotly_chart(fig, width='stretch', config={"displayModeBar": False})
                 st.caption(f"{tp['completed_count']} tasks completed in the last "
                            f"{tp['window_minutes']} min, warehouse-wide")
             else:
